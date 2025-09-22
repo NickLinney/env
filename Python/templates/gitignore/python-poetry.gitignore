@@ -1,0 +1,63 @@
+# =====================================================================
+# File: env/Python/templates/gitignore/python-poetry.gitignore
+# Purpose: Baseline .gitignore for Python/Poetry projects (cross-platform)
+# Note: No automation. You copy or merge this into projects when desired.
+# =====================================================================
+
+# ---- Python / Poetry ----
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyd
+*.so
+*.dylib
+
+# Packaging / build artifacts
+build/
+dist/
+.wheels/
+*.egg-info/
+*.egg
+.eggs/
+pip-wheel-metadata/
+
+# Test / coverage / tooling caches
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.mypy_cache/
+.pyre/
+.pytype/
+.ruff_cache/
+.tox/
+.nox/
+
+# Logs, caches
+*.log
+.cache/
+
+# IDE/editor settings (customize as needed)
+.vscode/
+.idea/
+
+# OS junk files
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Environment files (keep templates like .env.example)
+.env
+.env.*
+!.env.example
