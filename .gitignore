@@ -1,0 +1,98 @@
+# =====================================================================
+# env repo: dotfiles + .env templates (no secrets) + cross-platform junk
+# =====================================================================
+
+# --- macOS ------------------------------------------------------------
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.VolumeIcon.icns
+
+# --- Windows ----------------------------------------------------------
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# --- Linux / general --------------------------------------------------
+*~
+*.swp
+*.swo
+*.tmp
+.nfs*
+.Trash-*
+.fuse_hidden*
+
+# --- Editors / IDEs ---------------------------------------------------
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+*.code-workspace
+
+# --- Shell history / local state (never commit) -----------------------
+.zsh_history
+.zsh_sessions/
+.bash_history
+.lesshst
+.python_history
+
+# --- SSH / GPG / credentials (never commit) ---------------------------
+.ssh/
+.gnupg/
+.netrc
+.aws/
+.azure/
+.gcloud/
+.kube/
+
+# --- Real env files (do not commit secrets) ---------------------------
+# Allow templates/examples; block actual env files.
+.env
+.env.*
+!.env.example
+!.env.template
+!.env.sample
+!.env.dist
+
+# --- Language/tool caches (common) ------------------------------------
+__pycache__/
+*.py[cod]
+.cache/
+pip-wheel-metadata/
+node_modules/
+dist/
+build/
+coverage/
+.envrc
+.direnv/
+
+# --- Archive/backup clutter -------------------------------------------
+*.bak
+*.old
+*.orig
+*.rej
+*.save
+*.zip
+*.tar
+*.tgz
+*.gz
+*.7z
+
