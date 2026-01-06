@@ -13,7 +13,7 @@ mkdir -p ~/.timesheets
 # Workspace navigation
 # ============================================================
 
-alias workspace='cd /Users/nrlin/Documents/Workspace'
+alias ws='cd /Users/nrlin/Documents/Workspace'
 
 # ============================================================
 # Timeclock / Timesheet Management
@@ -215,3 +215,5 @@ awsprofile() {
 # RepoMix (Docker-based)
 alias repomix='docker run -v ${PWD}:/app -it --rm ghcr.io/yamadashy/repomix --style markdown'
 
+# All Git Diffs on All Branches
+alias diffs='git log --all --graph --patch --full-history'
