@@ -11,42 +11,62 @@ It is intentionally conservative, explicit, and automation-light:
 
 ---
 
-## Quickstart (One-Line Install — Debian 13 / Trixie)
+## Quickstart
 
-If you are on **Debian 13 (trixie)** and want a working multi-Python environment immediately:
+Choose your platform:
+
+### Debian 13 (trixie) — one-line install (no clone)
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/NickLinney/env/main/Python/Debian/trixie/python_trixie_new_setup.sh | bash
+````
 
+After completion, open a **new shell** (or source your rc file) and verify:
+
+```bash
+python --version
+which python
+pyenv versions
+pyenv global
 ```
-
-After completion:
-
-1. Open a **new shell** (or `source ~/.bashrc` / `source ~/.zshrc`)
-2. Verify:
-
-   ```bash
-   python --version
-   which python
-   ```
-
-This installs **pyenv**, multiple Python versions, and sets a clear default —
-without Git, Poetry, or project tooling.
 
 ---
 
-## Purpose
+### Windows — local clone (recommended)
 
-This repository exists to:
+```powershell
+cd ~/Documents/Workspace
+git clone https://github.com/NickLinney/env.git
+cd env
 
-* Bootstrap new machines quickly and safely
-* Preserve **explicit interpreter control**
-* Avoid coupling projects to global tooling
-* Provide **templates and conventions**, not mandates
+.\Python\Windows\python_windows_new_setup.ps1
+.\Python\Windows\python_poetry_preferences.ps1
+```
 
-The guiding idea is:
+Then follow the detailed guide:
 
-> *Environment setup should be boring, repeatable, and transparent.*
+* `Python/Windows/README.md`
+
+---
+
+### macOS — dotfiles template
+
+See:
+
+* `dotfiles/MacOS/15.6.1/README.md`
+
+---
+
+## What this repo is
+
+This repo exists to:
+
+* bootstrap new machines quickly and safely
+* provide **repeatable baseline conventions** (paths, structure, repo hygiene)
+* preserve **explicit interpreter control** across platforms
+* avoid coupling projects to “one true workflow”
+
+It is a **foundation**: scripts and templates you can adopt, adapt, and extend.
 
 ---
 
@@ -62,7 +82,7 @@ The guiding idea is:
 │
 ├─ dotfiles/
 │  └─ MacOS/
-│     └─ 15.6.1/                 # macOS zsh configuration
+│     └─ 15.6.1/                 # macOS zsh configuration template
 │
 ├─ docs/
 │  ├─ CONVENTIONS.md
@@ -79,82 +99,64 @@ The guiding idea is:
 
 ### Debian 13 (trixie)
 
-* **Bootstrap script:**
-  `Python/Debian/trixie/python_trixie_new_setup.sh`
-* **Documentation:**
-  `Python/Debian/trixie/README.md`
+* Bootstrap script: `Python/Debian/trixie/python_trixie_new_setup.sh`
+* Documentation: `Python/Debian/trixie/README.md`
 
-Installs:
+What it does:
 
-* pyenv
-* multiple CPython versions (side-by-side)
-* idempotent shell initialization
-* no Poetry, pipx, or project opinions
+* installs build deps via `apt`
+* installs/updates `pyenv` under `~/.pyenv`
+* installs multiple CPython versions side-by-side
+* sets a single explicit default via `pyenv global`
+* configures shell init **idempotently** (`~/.bashrc`, `~/.zshrc`)
+
+What it intentionally does **not** do:
+
+* no Poetry
+* no pipx-managed CLIs
+* no project scaffolding
 
 ---
 
 ### Windows
 
-* **Bootstrap:**
-  `Python/Windows/python_windows_new_setup.ps1`
-* **Poetry configuration:**
-  `Python/Windows/python_poetry_preferences.ps1`
-* **Documentation:**
-  `Python/Windows/README.md`
+* Setup scripts:
 
-Provides:
+  * `Python/Windows/python_windows_new_setup.ps1`
+  * `Python/Windows/python_poetry_preferences.ps1`
+* Documentation: `Python/Windows/README.md`
 
-* multi-version Python via `py`
-* pipx-managed Poetry
-* per-project `.venv/`
-* explicit Python 3.12 default
+What it provides:
+
+* multiple Python versions via `winget` + the `py` launcher
+* Poetry installed via `pipx`
+* Poetry configured for per-project `.venv/`
+* explicit Python 3.12 defaults (team baseline)
 
 ---
 
 ### macOS
 
-* **Dotfiles:**
-  `dotfiles/MacOS/15.6.1/`
-* **Includes:**
-  `.zshrc` template + README
+* Dotfiles: `dotfiles/MacOS/15.6.1/`
+* Documentation: `dotfiles/MacOS/15.6.1/README.md`
 
 Focus:
 
-* minimal shell setup
-* lightweight time tracking
-* small, auditable quality-of-life aliases
-  (including `diffs` for full git history inspection)
+* minimal zsh setup
+* lightweight time tracking utilities
+* small, auditable quality-of-life aliases (including `diffs` for git inspection)
 
 ---
 
-## Design Philosophy
+## Conventions and Versioning
 
-Across all platforms:
-
-* **Explicit over clever**
-* **Templates over automation**
-* **Idempotent scripts**
-* **Human-readable documentation**
-* **SemVer discipline**
-
-This repo is a *foundation*, not a workflow mandate.
-
----
-
-## Versioning & Releases
-
-* Semantic Versioning (SemVer) is used
-* `main` is the **ledger of tagged releases**
-* Work happens on `release/<version>` branches
-* Tags are applied **after merge to `main`**
-
-See:
-
-* `docs/VERSIONING.md`
-* `CHANGELOG.md`
+* `docs/CONVENTIONS.md` describes repo layout rules, naming patterns, and hygiene.
+* `docs/VERSIONING.md` describes SemVer usage and branch/tag discipline.
+* `CHANGELOG.md` records release history and meaningful changes.
+* `VERSION.md` describes the current release snapshot in narrative form.
 
 ---
 
 ## License
 
-MIT License — see `LICENSE.md`
+MIT License — see `LICENSE.md`.
