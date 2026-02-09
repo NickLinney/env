@@ -4,7 +4,7 @@
 v0.3.0
 
 ## Release Date
-2026-01-XX
+2026-02-09
 
 ## Status
 Personal environment templates repository.

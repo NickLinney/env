@@ -7,7 +7,7 @@ and versioned deliberately.
 
 ---
 
-## [0.3.0] - 2026-01-XX
+## [0.3.0] - 2026-02-09
 ### Added
 - Debian 13 (trixie) Python bootstrap:
   - `Python/Debian/trixie/python_trixie_new_setup.sh`
