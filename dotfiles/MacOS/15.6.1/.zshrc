@@ -217,3 +217,19 @@ alias repomix='docker run -v ${PWD}:/app -it --rm ghcr.io/yamadashy/repomix --st
 
 # All Git Diffs on All Branches
 alias diffs='git log --all --graph --patch --full-history'
+
+# Connect to local docker development containers
+#   based on personal script patterns
+dev() {
+  ssh -p 2222 \
+    -o "StrictHostKeyChecking=no" \
+    -o "UserKnownHostsFile=/dev/null" \
+    -o "LogLevel=ERROR" \
+    user@127.0.0.1
+}
+
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/nrlin/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
