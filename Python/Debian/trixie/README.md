@@ -36,7 +36,7 @@ cd env
 Run the bootstrap script:
 
 ```bash
-bash env/Python/Debian/trixie/python_trixie_new_setup.sh
+bash Python/Debian/trixie/python_trixie_new_setup.sh
 ```
 
 Open a **new shell** (recommended), or source your shell config:

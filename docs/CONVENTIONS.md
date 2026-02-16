@@ -37,7 +37,7 @@ Dotfiles are stored under:
 `dotfiles/<OS>/<OS_VERSION>/`
 
 Example:
-- `dotfiles/MacOS/15.6.1/`
+- `dotfiles/MacOS/MacOS_15/`
   - `.zshrc`
   - `README.md`
 

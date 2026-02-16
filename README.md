@@ -4,6 +4,7 @@ This repository contains **environment bootstrap scripts, dotfiles, and conventi
 for building **predictable, repeatable development environments** across platforms.
 
 It is intentionally conservative, explicit, and automation-light:
+
 - no hidden magic
 - no opinionated frameworks forced on projects
 - safe to re-run
@@ -11,15 +12,52 @@ It is intentionally conservative, explicit, and automation-light:
 
 ---
 
+## Repository Structure
+
+```text
+.
+├─ Python/
+│  ├─ Debian/
+│  │  └─ trixie/                 # Debian 13 Python bootstrap (pyenv)
+│  ├─ MacOS/
+│  │  └─ MacOS_15/               # MacOS 15 (Sequoia) Python bootstrap (python.org installers)
+│  ├─ Windows/                   # Windows Python baseline (+ optional Poetry preferences)
+│  └─ templates/                 # Shared Python templates (.gitignore, cookbooks)
+│
+├─ dotfiles/
+│  └─ MacOS/
+│     └─ MacOS_15/               # macOS zsh configuration template
+│
+├─ docs/
+│  ├─ CONVENTIONS.md
+│  └─ VERSIONING.md
+│
+├─ CHANGELOG.md
+├─ VERSION.md
+└─ LICENSE.md
+```
+
+---
+
 ## Quickstart
 
-Choose your platform:
+Choose your platform and preferred execution style.
 
-### Debian 13 (trixie) — one-line install (no clone)
+### Debian 13 (trixie)
+
+**A) Run directly from GitHub (no clone)**
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/NickLinney/env/main/Python/Debian/trixie/python_trixie_new_setup.sh | bash
 ````
+
+**B) Run from a local clone (recommended)**
+
+```bash
+git clone https://github.com/NickLinney/env.git
+cd env
+bash Python/Debian/trixie/python_trixie_new_setup.sh
+```
 
 After completion, open a **new shell** (or source your rc file) and verify:
 
@@ -30,9 +68,23 @@ pyenv versions
 pyenv global
 ```
 
+Documentation:
+
+* `Python/Debian/trixie/README.md`
+
 ---
 
-### Windows — local clone (recommended)
+### Windows
+
+#### Baseline (ADR-aligned): Python + pipx, no tools installed by default
+
+**A) Run directly from GitHub (no clone)**
+
+```powershell
+iwr -useb https://raw.githubusercontent.com/NickLinney/env/main/Python/Windows/python_windows_new_setup.ps1 | iex
+```
+
+**B) Run from a local clone (recommended)**
 
 ```powershell
 cd ~/Documents/Workspace
@@ -40,20 +92,62 @@ git clone https://github.com/NickLinney/env.git
 cd env
 
 .\Python\Windows\python_windows_new_setup.ps1
+```
+
+#### Optional preferences layer: Poetry via pipx (not part of the baseline)
+
+**A) Run directly from GitHub (no clone)**
+
+```powershell
+iwr -useb https://raw.githubusercontent.com/NickLinney/env/main/Python/Windows/python_poetry_preferences.ps1 | iex
+```
+
+**B) Run from a local clone**
+
+```powershell
 .\Python\Windows\python_poetry_preferences.ps1
 ```
 
-Then follow the detailed guide:
+Notes:
+
+* If you encounter script execution policy blocks, run PowerShell as a normal user and use:
+
+  * `Set-ExecutionPolicy -Scope Process Bypass -Force`
+* After running the preferences script, open a **new PowerShell session** so user environment variables take effect.
+
+Documentation:
 
 * `Python/Windows/README.md`
 
 ---
 
-### macOS — dotfiles template
+### MacOS 15 (Sequoia)
 
-See:
+#### Python baseline: python.org installers, explicit default interpreter
 
-* `dotfiles/MacOS/15.6.1/README.md`
+**A) Run directly from GitHub (no clone)**
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/NickLinney/env/main/Python/MacOS/MacOS_15/python_macos_new_setup.sh | bash
+```
+
+**B) Run from a local clone (recommended)**
+
+```bash
+git clone https://github.com/NickLinney/env.git
+cd env
+bash Python/MacOS/MacOS_15/python_macos_new_setup.sh
+```
+
+Documentation:
+
+* `Python/MacOS/MacOS_15/README.md`
+
+#### Dotfiles template (optional)
+
+Documentation:
+
+* `dotfiles/MacOS/MacOS_15/README.md`
 
 ---
 
@@ -67,31 +161,6 @@ This repo exists to:
 * avoid coupling projects to “one true workflow”
 
 It is a **foundation**: scripts and templates you can adopt, adapt, and extend.
-
----
-
-## Repository Structure (High Level)
-
-```text
-.
-├─ Python/
-│  ├─ Debian/
-│  │  └─ trixie/                 # Debian 13 Python bootstrap (pyenv)
-│  ├─ Windows/                   # Windows Python + Poetry setup
-│  └─ templates/                 # Shared Python templates (.gitignore, cookbooks)
-│
-├─ dotfiles/
-│  └─ MacOS/
-│     └─ 15.6.1/                 # macOS zsh configuration template
-│
-├─ docs/
-│  ├─ CONVENTIONS.md
-│  └─ VERSIONING.md
-│
-├─ CHANGELOG.md
-├─ VERSION.md
-└─ LICENSE.md
-```
 
 ---
 
@@ -120,31 +189,42 @@ What it intentionally does **not** do:
 
 ### Windows
 
-* Setup scripts:
-
-  * `Python/Windows/python_windows_new_setup.ps1`
-  * `Python/Windows/python_poetry_preferences.ps1`
+* Baseline script: `Python/Windows/python_windows_new_setup.ps1`
+* Optional preferences: `Python/Windows/python_poetry_preferences.ps1`
 * Documentation: `Python/Windows/README.md`
 
-What it provides:
+What it provides (baseline):
 
 * multiple Python versions via `winget` + the `py` launcher
+* `pipx` installed and ready (user-local)
+* explicit Python 3.12 defaults (team baseline)
+* no global tooling installed by default
+
+Optional preferences layer:
+
 * Poetry installed via `pipx`
 * Poetry configured for per-project `.venv/`
-* explicit Python 3.12 defaults (team baseline)
+* explicit Poetry interpreter defaults (`POETRY_PYTHON`, `PY_PYTHON=3.12`)
 
 ---
 
-### macOS
+### MacOS 15 (Sequoia)
 
-* Dotfiles: `dotfiles/MacOS/15.6.1/`
-* Documentation: `dotfiles/MacOS/15.6.1/README.md`
+Python baseline:
+
+* Bootstrap script: `Python/MacOS/MacOS_15/python_macos_new_setup.sh`
+* Documentation: `Python/MacOS/MacOS_15/README.md`
+
+Dotfiles:
+
+* Dotfiles: `dotfiles/MacOS/MacOS_15/`
+* Documentation: `dotfiles/MacOS/MacOS_15/README.md`
 
 Focus:
 
-* minimal zsh setup
-* lightweight time tracking utilities
-* small, auditable quality-of-life aliases (including `diffs` for git inspection)
+* minimal, auditable setup
+* explicit interpreter control for Python
+* small, safe quality-of-life functions/aliases (including `diffs` and `dev()`)
 
 ---
 
