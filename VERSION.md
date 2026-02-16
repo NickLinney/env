@@ -1,79 +1,72 @@
 # VERSION.md
 
 ## Version
-v0.3.0
+v0.4.0
 
 ## Release Date
-2026-02-09
+2026-02-16
 
 ## Status
 Personal environment templates repository.
 SemVer is used to create stable reference points for repeatable machine bootstraps and consistent repo conventions.
 
 ## What This Version Represents
-`v0.3.0` establishes **Debian 13 (trixie)** as a first-class supported platform in this repository by adding a **pyenv-based, multi-version Python bootstrap** that is intentionally minimal, explicit, and safe to re-run.
+`v0.4.0` establishes **Windows and macOS** as first-class supported platforms for **standards-aligned Python development baselines**.
 
-This release also upgrades the repo’s “front door” documentation:
-- The root `README.md` now presents a **Quickstart** and clearer platform entry points.
-- The repository structure and philosophy are made more explicit for day-1 usability.
+This release focuses on cross-platform parity with the existing Debian Python bootstrap philosophy:
 
-Finally, this release includes a small macOS dotfiles refinement that improves day-to-day Git inspection ergonomics.
+- explicit interpreter control
+- minimal, auditable behavior
+- safe to re-run (idempotent where applicable)
+- no mandatory workflow tooling
 
-## Included In v0.3.0
+It also normalizes macOS dotfiles pathing and adds a small local-development SSH helper.
 
-### Added — Debian 13 (trixie) Python Bootstrap (pyenv)
-- `Python/Debian/trixie/python_trixie_new_setup.sh`
-  - Installs required build dependencies via `apt`
-  - Installs/updates `pyenv` under `~/.pyenv`
-  - Installs multiple CPython versions side-by-side
-  - Sets a single, explicit default interpreter via `pyenv global`
-  - Adds idempotent `pyenv init` blocks to:
-    - `~/.bashrc`
-    - `~/.zshrc`
-  - Designed to be safe to re-run:
-    - avoids duplicate shell config
-    - skips already-installed Python versions
-    - reasserts configured default
+## Included In v0.4.0
 
-- `Python/Debian/trixie/README.md`
-  - Local-clone instructions (recommended)
-  - No-clone one-liner execution option
-  - Verification steps
-  - Explicit `venv`-first workflow guidance
-  - Customization guidance (change versions/defaults in one place)
+### Added — macOS 15 Python Default Setup (python.org installers)
+- `Python/MacOS/MacOS_15/python_macos_new_setup.sh`
+  - installs CPython 3.9–3.13 side-by-side under:
+    - `/Library/Frameworks/Python.framework/Versions/`
+  - enforces Python 3.12 as the default `python3` via `/usr/local/bin` symlinks
+  - verifies installer integrity via python.org SHA256 checksums
+  - does not modify shell configuration
+  - does not install Poetry/uv/pipx or any global Python packages
 
-### Added — Root Documentation Improvements
-- Root `README.md`
-  - Adds a top-level **Quickstart** for Debian 13 (trixie)
-  - Adds a one-line “curl | bash” installer for the Debian script
-  - Clarifies repo structure and platform entry points
-  - Re-states design philosophy: explicit, minimal, repeatable
+- `Python/MacOS/MacOS_15/README.md`
+  - quickstart and verification guidance
+  - explains default interpreter selection behavior on macOS
 
-### Changed — macOS Dotfiles Ergonomics
-- `dotfiles/MacOS/15.6.1/.zshrc`
-  - Adds `diffs` alias:
-    - `git log --all --graph --patch --full-history`
-  - (Also reflects the workspace alias adjustment present in the repo’s history.)
+### Changed — Windows Python baseline is tooling-neutral by default
+- `Python/Windows/python_windows_new_setup.ps1`
+  - ADR-aligned baseline: installs Python + pipx
+  - installs no global tools by default (empty tool list)
+  - maintains explicit Python 3.12 defaults
+
+- `Python/Windows/python_poetry_preferences.ps1`
+  - clarified as an optional preferences layer
+  - installs/configures Poetry via pipx (per-project `.venv/`)
+  - improves robustness for pipx pathing and verification output
+
+### Changed — macOS dotfiles path normalization + local dev SSH helper
+- `dotfiles/MacOS/15.6.1/` → `dotfiles/MacOS/MacOS_15/`
+- `dotfiles/MacOS/MacOS_15/.zshrc`
+  - adds `dev()` helper for SSH to local containers:
+    - `user@127.0.0.1:2222`
 
 ## Compatibility / Expectations
 
 ### Debian 13 (trixie)
-- Intended baseline:
-  - Debian 13 (testing / trixie) userland
-  - User has `sudo` access for `apt` operations
-- Installs:
-  - `pyenv` into `~/.pyenv`
-  - multiple CPython builds compiled locally (requires build deps)
-- Expects:
-  - user opens a new shell (or sources shell rc) after install
+- Remains supported as in v0.3.0 (pyenv-based multi-version bootstrap)
 
 ### Windows
-- Uses `winget` + `py` launcher strategy for multi-version Python
-- Poetry installed via `pipx` with per-project `.venv/` preference
+- Requires `winget` and the Windows `py` launcher strategy
+- Baseline provides Python + pipx; Poetry is optional via preferences script
 
-### macOS
-- Dotfiles are templates, not a mandatory system configuration
-- File paths inside templates may be machine-specific and should be adapted
+### macOS 15 (Sequoia)
+- Uses official python.org installers (universal2)
+- Requires `sudo` for installer execution and `/usr/local/bin` symlink management
+- Dotfiles remain templates, not mandatory system configuration
 
 ## Operational Notes
 - This repo stores **templates and bootstrap scripts**, not machine state.
