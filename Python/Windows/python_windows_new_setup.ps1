@@ -1,9 +1,9 @@
 <# 
-Bootstrap Windows Python environment (multi-version) + pipx
+Bootstrap Windows Python environment (multi-version) + pipx (ADR-aligned baseline)
 - Installs selected CPython versions via winget (python.org builds)
 - Creates a per-user py.ini to set default `py` launcher version
 - Installs pipx (user-local), ensures PATH, and pins default interpreter
-- Optionally installs common global CLI tools via pipx
+- Optional: install additional CLI tools via pipx (empty by default; baseline installs none)
 
 Usage:
   - Run in a normal PowerShell session (no admin required).
@@ -24,7 +24,7 @@ $PythonVersions = @(
 
 $DefaultPythonMinor = '3.12'              # default for `py` (no switch) and pipx
 $InstallGlobalTools = $true               # true or false
-$GlobalTools       = @('poetry')  # install poetry, ruff, black, pdm, etc (change as desired)
+$GlobalTools       = @()                  # ADR baseline: empty by default (add 'ruff','black', etc. if desired)
 
 #---------------------------#
 # Script begins             #
@@ -42,6 +42,7 @@ function Install-PythonVersion {
   param(
     [Parameter(Mandatory=$true)][string]$MinorVersion
   )
+
   # Map minor -> winget ID (python.org maintained)
   $id =
     switch ($MinorVersion) {
@@ -57,6 +58,7 @@ function Install-PythonVersion {
   # for first run (no py yet), fall back to probing the standard install path.
   $already = $false
   $pyExists = Get-Command py -ErrorAction SilentlyContinue
+
   if ($pyExists) {
     $out = & py -0p 2>$null
     if ($out -match "3\.$($MinorVersion.Split('.')[1])") {
@@ -84,13 +86,18 @@ function Set-PyDefault {
   param(
     [Parameter(Mandatory=$true)][string]$MinorVersion
   )
-  $iniDir  = $env:LOCALAPPDATA
-  if (-not (Test-Path $iniDir)) { New-Item -ItemType Directory -Force -Path $iniDir | Out-Null }
-  $pyIni   = Join-Path $iniDir 'py.ini'
+
+  $iniDir = $env:LOCALAPPDATA
+  if (-not (Test-Path $iniDir)) {
+    New-Item -ItemType Directory -Force -Path $iniDir | Out-Null
+  }
+
+  $pyIni = Join-Path $iniDir 'py.ini'
   $content = @"
 [defaults]
 python=$MinorVersion
 "@
+
   Set-Content -Path $pyIni -Value $content -Encoding ASCII -Force
   Write-Host "[OK] Set default 'py' version to $MinorVersion in $pyIni"
 }
@@ -99,11 +106,10 @@ function Ensure-Pipx {
   param(
     [Parameter(Mandatory=$true)][string]$MinorVersion
   )
-  # Install pip & pipx into user site
+
   Write-Host "[*] Installing/Upgrading pip & pipx for Python $MinorVersion..."
   & py -$MinorVersion -m pip install --user -U pip pipx | Out-Host
 
-  # Add pipx shims to PATH (persistent + current session)
   Write-Host "[*] Ensuring pipx PATH..."
   & py -$MinorVersion -m pipx ensurepath | Out-Host
 
@@ -128,6 +134,7 @@ function Install-GlobalTools {
   param(
     [string[]]$Tools
   )
+
   foreach ($tool in $Tools) {
     try {
       Write-Host "[*] Installing/updating tool: $tool"
@@ -143,25 +150,28 @@ function Install-GlobalTools {
 Assert-Winget
 
 Write-Host "=== Installing CPython versions ==="
-foreach ($v in $PythonVersions) { Install-PythonVersion -MinorVersion $v }
+foreach ($v in $PythonVersions) {
+  Install-PythonVersion -MinorVersion $v
+}
 
-# Verify `py` launcher discovery
 Write-Host "`n=== Discovered interpreters (py -0p) ==="
-try { & py -0p | Out-Host } catch { Write-Warning "The 'py' launcher is not on PATH yet. Open a new shell if needed." }
+try {
+  & py -0p | Out-Host
+} catch {
+  Write-Warning "The 'py' launcher is not on PATH yet. Open a new shell if needed."
+}
 
-# Set default `py` version
 Set-PyDefault -MinorVersion $DefaultPythonMinor
-
-# Install pipx and set defaults
 Ensure-Pipx -MinorVersion $DefaultPythonMinor
 
-# Optional: global tools
 if ($InstallGlobalTools -and $GlobalTools.Count -gt 0) {
   Write-Host "`n=== Installing global CLI tools via pipx ==="
   Install-GlobalTools -Tools $GlobalTools
+} else {
+  Write-Host "`n=== Global CLI tools via pipx ==="
+  Write-Host "[OK] None configured."
 }
 
-# Final checks
 Write-Host "`n=== Final checks ==="
 Write-Host "pipx version:"
 try { & pipx --version | Out-Host } catch { Write-Warning "pipx not found on current PATH. Open a new PowerShell window." }
