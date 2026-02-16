@@ -71,19 +71,22 @@ Python **3.12** is enforced as the default `python3`.
 Run directly from GitHub without cloning the repository:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/NickLinney/env/main/env/Python/MacOS/MacOS_15/python_macos_new_setup.sh | bash
+curl -fsSL https://raw.githubusercontent.com/NickLinney/env/main/Python/MacOS/MacOS_15/python_macos_new_setup.sh | bash
 ````
+
+Notes:
+
+* The script will request `sudo` for the installer and `/usr/local/bin` symlinks.
+* If you prefer to review the script first, clone the repo and run locally (below).
 
 ---
 
-## Manual Execution
-
-If cloned locally:
+## Local Clone Execution
 
 ```bash
-cd env/Python/MacOS/MacOS_15
-chmod +x python_macos_new_setup.sh
-./python_macos_new_setup.sh
+git clone https://github.com/NickLinney/env.git
+cd env
+bash Python/MacOS/MacOS_15/python_macos_new_setup.sh
 ```
 
 ---
