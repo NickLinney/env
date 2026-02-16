@@ -1,6 +1,6 @@
 # Windows Environment Setup Scripts
 
-This directory contains PowerShell scripts to bootstrap a Python + Poetry development environment on Windows.  
+This directory contains PowerShell scripts to bootstrap a Python baseline (optional Poetry preferences) development environment on Windows.  
 They are designed for repeatability when setting up new developer machines.
 
 ---

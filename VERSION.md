@@ -24,7 +24,7 @@ It also normalizes macOS dotfiles pathing and adds a small local-development SSH
 
 ## Included In v0.4.0
 
-### Added — macOS 15 Python Default Setup (python.org installers)
+### Added — MacOS 15 (Sequoia) Python Default Setup (python.org installers)
 - `Python/MacOS/MacOS_15/python_macos_new_setup.sh`
   - installs CPython 3.9–3.13 side-by-side under:
     - `/Library/Frameworks/Python.framework/Versions/`
@@ -63,7 +63,7 @@ It also normalizes macOS dotfiles pathing and adds a small local-development SSH
 - Requires `winget` and the Windows `py` launcher strategy
 - Baseline provides Python + pipx; Poetry is optional via preferences script
 
-### macOS 15 (Sequoia)
+### MacOS 15 (Sequoia)
 - Uses official python.org installers (universal2)
 - Requires `sudo` for installer execution and `/usr/local/bin` symlink management
 - Dotfiles remain templates, not mandatory system configuration

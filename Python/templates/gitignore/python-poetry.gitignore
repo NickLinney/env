@@ -1,5 +1,5 @@
 # =====================================================================
-# File: env/Python/templates/gitignore/python-poetry.gitignore
+# File: Python/templates/gitignore/python-poetry.gitignore
 # Purpose: Baseline .gitignore for Python/Poetry projects (cross-platform)
 # Note: No automation. You copy or merge this into projects when desired.
 # =====================================================================

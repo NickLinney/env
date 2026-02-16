@@ -1,5 +1,5 @@
 # ============================================================
-# File: env/Python/Debian/trixie/python_trixie_new_setup.sh
+# File: Python/Debian/trixie/python_trixie_new_setup.sh
 # Purpose:
 #   Bootstrap a Debian 13 (trixie) machine for multi-version Python using pyenv.
 #   - Installs build deps

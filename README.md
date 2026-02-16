@@ -20,7 +20,7 @@ It is intentionally conservative, explicit, and automation-light:
 │  ├─ Debian/
 │  │  └─ trixie/                 # Debian 13 Python bootstrap (pyenv)
 │  ├─ MacOS/
-│  │  └─ MacOS_15/               # macOS 15 Python bootstrap (python.org installers)
+│  │  └─ MacOS_15/               # MacOS 15 (Sequoia) Python bootstrap (python.org installers)
 │  ├─ Windows/                   # Windows Python baseline (+ optional Poetry preferences)
 │  └─ templates/                 # Shared Python templates (.gitignore, cookbooks)
 │
@@ -121,7 +121,7 @@ Documentation:
 
 ---
 
-### macOS 15 (Sequoia)
+### MacOS 15 (Sequoia)
 
 #### Python baseline: python.org installers, explicit default interpreter
 
@@ -208,7 +208,7 @@ Optional preferences layer:
 
 ---
 
-### macOS 15 (Sequoia)
+### MacOS 15 (Sequoia)
 
 Python baseline:
 

@@ -1,4 +1,4 @@
-# macOS 15.6.1 Dotfiles
+# MacOS 15 (Sequoia) Dotfiles
 
 This directory contains configuration files for my personal macOS development environment, including `~/.zshrc` and related shell configurations. The goal is to maintain a **minimal, UNIX-like workflow** on my primary working device, prioritizing simplicity, reliability, and efficiency.
 
@@ -13,7 +13,7 @@ The environment is designed according to the principles of **pragmatic minimalis
 - Ensure reliability and safety (e.g., prevent double clock-ins or data loss).  
 - Preserve all historical records (append-only timesheets).  
 
-This setup is intended for personal use and is tuned specifically for macOS 16.5.1, but it uses standard POSIX/macOS utilities and should work in similar UNIX-like environments.
+This setup is intended for personal use and is tuned specifically for MacOS 15 (Sequoia), but it uses standard POSIX/macOS utilities and should work in similar UNIX-like environments.
 
 ---
 
@@ -21,7 +21,7 @@ This setup is intended for personal use and is tuned specifically for macOS 16.5
 
 ### Workspace Navigation
 
-- **Alias:** `workspace` — quickly navigate to the main development folder (`~/Documents/Workspace`).
+- **Alias:** `ws` — quickly navigate to the main development folder (`~/Documents/Workspace`).
 
 ### Time Tracking
 
