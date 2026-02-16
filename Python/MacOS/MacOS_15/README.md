@@ -71,7 +71,7 @@ Python **3.12** is enforced as the default `python3`.
 Run directly from GitHub without cloning the repository:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/NickLinney/env/main/env/Python/MacOS/MacOS_15/python_macos_new_setup.sh | bash
+curl -fsSL https://raw.githubusercontent.com/NickLinney/env/main/Python/MacOS/MacOS_15/python_macos_new_setup.sh | bash
 ````
 
 ---

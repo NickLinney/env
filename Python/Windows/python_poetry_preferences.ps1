@@ -1,5 +1,5 @@
 # =====================================================================
-# File: env/Python/Windows/python_poetry_preferences.ps1
+# File: Python/Windows/python_poetry_preferences.ps1
 # Purpose:
 #   - Ensure pipx and Poetry exist (Poetry installed via pipx if missing)
 #   - Configure Poetry to use per-project ".venv"

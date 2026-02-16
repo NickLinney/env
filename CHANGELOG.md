@@ -9,13 +9,13 @@ and versioned deliberately.
 
 ## [0.4.0] - 2026-02-16
 ### Added
-- macOS 15 (Sequoia) Python bootstrap (python.org installers):
+- MacOS 15 (Sequoia) (Sequoia) Python bootstrap (python.org installers):
   - `Python/MacOS/MacOS_15/python_macos_new_setup.sh`
   - installs CPython 3.9–3.13 side-by-side
   - enforces Python 3.12 as default via `/usr/local/bin` symlinks
   - checksum verification against python.org release pages
   - no Homebrew/pyenv, no project tooling, no dotfile writes
-- macOS 15 Python documentation:
+- MacOS 15 (Sequoia) Python documentation:
   - `Python/MacOS/MacOS_15/README.md`
 
 ### Changed
