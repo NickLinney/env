@@ -1,74 +1,119 @@
 # VERSION.md
 
 ## Version
-v0.4.0
+v0.5.0
 
 ## Release Date
-2026-02-16
+2026-02-17
 
 ## Status
 Personal environment templates repository.
-SemVer is used to create stable reference points for repeatable machine bootstraps and consistent repo conventions.
+
+Semantic Versioning (SemVer) is used to create stable, referenceable release points for repeatable machine bootstraps and consistent repository conventions.
+
+---
 
 ## What This Version Represents
-`v0.4.0` establishes **Windows and macOS** as first-class supported platforms for **standards-aligned Python development baselines**.
 
-This release focuses on cross-platform parity with the existing Debian Python bootstrap philosophy:
+`v0.5.0` introduces a Debian Trixie–scoped, fully local AI coding assistant workflow for the Micro editor.
 
-- explicit interpreter control
-- minimal, auditable behavior
-- safe to re-run (idempotent where applicable)
-- no mandatory workflow tooling
+This release expands the repository beyond interpreter bootstraps and shell configuration by adding an editor-integrated module that remains:
 
-It also normalizes macOS dotfiles pathing and adds a small local-development SSH helper.
+- Local-first (no cloud dependency required)
+- Conservative and auditable
+- Modular (interactive vs provisioning modes)
+- Designed for repeatable use in both workstation and container contexts
 
-## Included In v0.4.0
+The repository continues to serve as a collection of environment templates, scripts, and conventions — not as a monolithic toolchain.
 
-### Added — MacOS 15 (Sequoia) Python Default Setup (python.org installers)
-- `Python/MacOS/MacOS_15/python_macos_new_setup.sh`
-  - installs CPython 3.9–3.13 side-by-side under:
-    - `/Library/Frameworks/Python.framework/Versions/`
-  - enforces Python 3.12 as the default `python3` via `/usr/local/bin` symlinks
-  - verifies installer integrity via python.org SHA256 checksums
-  - does not modify shell configuration
-  - does not install Poetry/uv/pipx or any global Python packages
+---
 
-- `Python/MacOS/MacOS_15/README.md`
-  - quickstart and verification guidance
-  - explains default interpreter selection behavior on macOS
+## Included In v0.5.0
 
-### Changed — Windows Python baseline is tooling-neutral by default
-- `Python/Windows/python_windows_new_setup.ps1`
-  - ADR-aligned baseline: installs Python + pipx
-  - installs no global tools by default (empty tool list)
-  - maintains explicit Python 3.12 defaults
+### Added — Debian Trixie Micro Local LLM Assistant (Micro + Ollama + llm)
 
-- `Python/Windows/python_poetry_preferences.ps1`
-  - clarified as an optional preferences layer
-  - installs/configures Poetry via pipx (per-project `.venv/`)
-  - improves robustness for pipx pathing and verification output
+New module:
 
-### Changed — macOS dotfiles path normalization + local dev SSH helper
-- `dotfiles/MacOS/15.6.1/` → `dotfiles/MacOS/MacOS_15/`
-- `dotfiles/MacOS/MacOS_15/.zshrc`
-  - adds `dev()` helper for SSH to local containers:
-    - `user@127.0.0.1:2222`
+```
+
+micro/Debian/trixie/
+
+```
+
+#### Interactive Setup Script
+
+`micro-local-llm-setup.sh`
+
+- Operator-driven install flow
+- Installs:
+  - Micro editor
+  - Ollama
+  - `llm` CLI + `llm-ollama`
+  - `llm-micro` plugin
+- Configures Micro keybindings (Alt-a, Alt-c)
+- Optionally pulls a lightweight default model
+- Designed for human-driven workstation setup
+
+---
+
+#### Non-Interactive Provisioning Script
+
+`micro-local-llm-noninteractive.sh`
+
+- Designed for Docker builds and CI pipelines
+- Requires root (no sudo usage inside script)
+- Targets a non-root user home via `--target-user` (default: `user`)
+- Provides deterministic exit behavior:
+  - Non-zero exit when errors occur
+  - Exit code reflects accumulated error count (capped at 255)
+- Supports:
+  - `--skip-model-pull`
+  - `--ollama-start-mode auto|background|never`
+
+This enables reproducible, container-friendly provisioning while maintaining strict error signaling.
+
+---
+
+#### Documentation
+
+- `micro/Debian/trixie/README.md`
+  - Usage
+  - Flags
+  - Docker example
+  - Remote execution examples
+- `micro/Debian/trixie/AUTOMATION.md`
+  - Provisioning design rationale
+  - Operational notes
+  - Tradeoffs and constraints
+
+---
 
 ## Compatibility / Expectations
 
-### Debian 13 (trixie)
-- Remains supported as in v0.3.0 (pyenv-based multi-version bootstrap)
+### Debian Trixie Scope
 
-### Windows
-- Requires `winget` and the Windows `py` launcher strategy
-- Baseline provides Python + pipx; Poetry is optional via preferences script
+- Module is scoped to Debian Trixie by default.
+- Designed for Debian-based environments.
 
-### MacOS 15 (Sequoia)
-- Uses official python.org installers (universal2)
-- Requires `sudo` for installer execution and `/usr/local/bin` symlink management
-- Dotfiles remain templates, not mandatory system configuration
+### Model Pulling
+
+- Models are pulled by tag (not digest-pinned).
+- Tags may change over time.
+- For deterministic image builds, use `--skip-model-pull` and manage models separately.
+
+---
 
 ## Operational Notes
-- This repo stores **templates and bootstrap scripts**, not machine state.
-- **No secrets** should ever be committed.
+
+- This repository stores templates and bootstrap scripts — not machine state.
+- No secrets should ever be committed.
 - `.env` files are blocked by default; templates/examples are allowed.
+- Scripts are written to be explicit, auditable, and conservative in behavior.
+
+---
+
+## Previous Versions
+
+- v0.4.0 — Cross-platform Python default setup alignment
+- v0.3.0 — Repository structure normalization and documentation cleanup
+- v0.2.0 — Initial environment automation baseline
