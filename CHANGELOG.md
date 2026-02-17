@@ -7,6 +7,36 @@ and versioned deliberately.
 
 ---
 
+## [0.5.0] - 2026-02-17
+
+### Added
+
+- Debian Trixie Micro editor local LLM assistant module:
+  - `micro/Debian/trixie/micro-local-llm-setup.sh` (interactive setup)
+  - `micro/Debian/trixie/micro-local-llm-noninteractive.sh` (non-interactive provisioning; root-required; target-user aware)
+  - `micro/Debian/trixie/README.md`
+  - `micro/Debian/trixie/AUTOMATION.md`
+
+- Interactive setup script:
+  - Installs Micro, Ollama, `llm`, `llm-ollama`, and `llm-micro`
+  - Configures Micro keybindings
+  - Supports optional model pull
+
+- Non-interactive provisioning script:
+  - Designed for Docker/CI contexts
+  - Requires root
+  - Targets non-root user via `--target-user`
+  - Deterministic exit behavior (non-zero on error; exit code reflects error count, capped at 255)
+  - Supports `--skip-model-pull`
+  - Supports explicit Ollama lifecycle control (`--ollama-start-mode`)
+
+### Notes
+
+- Model pulls are tag-based (not digest-pinned); tags may change over time.
+- Module is scoped to Debian Trixie.
+
+---
+
 ## [0.4.0] - 2026-02-16
 ### Added
 - MacOS 15 (Sequoia) (Sequoia) Python bootstrap (python.org installers):
